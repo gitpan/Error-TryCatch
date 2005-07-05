@@ -1,16 +1,19 @@
-use 5.008006;
+use strict;
+use warnings;
 use ExtUtils::MakeMaker;
-# See lib/ExtUtils/MakeMaker.pm for details of how to influence
-# the contents of the Makefile that is written.
+
 WriteMakefile(
-    NAME              => 'Error::TryCatch',
-    VERSION_FROM      => 'lib/Error/TryCatch.pm', # finds $VERSION
-    PREREQ_PM         => {
-		Filter::Simple    => 0.78,
-		Parse::RecDescent => 1.94,
-		Class::Accessor   => 0.19
-	},
-    ($] >= 5.005 ?     ## Add these new keywords supported since 5.005
-      (ABSTRACT_FROM  => 'lib/Error/TryCatch.pm', # retrieve abstract from module
-       AUTHOR         => 'Nilson Santos F. Jr. <nilsonsfj@cpan.org>') : ()),
+    NAME                => 'Error::TryCatch',
+    AUTHOR              => 'Nilson Santos F. Jr. <nilsonsfj@cpan.org>',
+    VERSION_FROM        => 'lib\Error\TryCatch.pm',
+    ABSTRACT_FROM       => 'lib\Error\TryCatch.pm',
+    PL_FILES            => {},
+    PREREQ_PM => {
+        'Test::More'		=> 0,
+		'Filter::Simple'    => 0,
+		'Parse::RecDescent' => 0,
+		'Class::Accessor'   => 0
+    },
+    dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
+    clean               => { FILES => 'Error-TryCatch-0.04-*' },
 );

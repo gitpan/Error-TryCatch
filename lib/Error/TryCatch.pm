@@ -16,7 +16,7 @@ use Filter::Simple;
 use Parse::RecDescent;
 use Carp;
 
-$VERSION = 0.03;
+$VERSION = 0.04;
 @EXPORT = qw(throw);
 
 $DEFAULT_EXCEPTION = 'Error::Unhandled' unless defined $DEFAULT_EXCEPTION;
@@ -232,7 +232,7 @@ CAVEATS below.
 
 Error::TryCatch was built with exception classes in mind and will even wrap
 anything it catches that is not a reference into a default unhandled exception
-class, which defaults to Exception::Unhandled.
+class, which defaults to Error::Unhandled (which inherits from Error::Generic).
 
 If you want to use another exception class for any reason, you should set the
 package variable $Error::TryCatch::DEFAULT_EXCEPTION to the classname. There's

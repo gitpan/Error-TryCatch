@@ -1,13 +1,17 @@
 Revision history for Perl extension Error::TryCatch.
 
-0.01    First version, not public
-        Just works, but line numbers are not preserved
-
-0.02    2005/01/30
-        - Line numbers preserved
-        - Small grammar issues fixed
+0.04	Tue Jul  5 11:20:28 2005
+	- Improved / corrected some documentations issues
+	- Reordered the Changes file
 
 0.03	2005/02/26
 	- First public version
 	- Removed some trash from the code
 	- Documentation written
+
+0.02    2005/01/30
+        - Line numbers preserved
+        - Small grammar issues fixed
+
+0.01    First version, not public
+        Just works, but line numbers are not preserved
