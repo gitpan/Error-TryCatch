@@ -16,7 +16,7 @@ use Filter::Simple;
 use Parse::RecDescent;
 use Carp;
 
-$VERSION = 0.04;
+$VERSION = 0.05;
 @EXPORT = qw(throw);
 
 $DEFAULT_EXCEPTION = 'Error::Unhandled' unless defined $DEFAULT_EXCEPTION;
