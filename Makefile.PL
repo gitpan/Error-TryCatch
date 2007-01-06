@@ -4,7 +4,7 @@ use ExtUtils::MakeMaker;
 
 WriteMakefile(
     NAME                => 'Error::TryCatch',
-    AUTHOR              => 'Nilson Santos F. Jr. <nilsonsfj@cpan.org>',
+    AUTHOR              => 'Nilson Santos Figueiredo Júnior <nilsonsfj@cpan.org>',
     VERSION_FROM        => 'lib/Error/TryCatch.pm',
     ABSTRACT_FROM       => 'lib/Error/TryCatch.pm',
     PL_FILES            => {},
@@ -15,5 +15,5 @@ WriteMakefile(
 		'Class::Accessor'   => 0
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
-    clean               => { FILES => 'Error-TryCatch-0.05-*' },
+    clean               => { FILES => 'Error-TryCatch-*' },
 );

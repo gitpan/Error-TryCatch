@@ -1,5 +1,5 @@
-Error-TryCatch version 0.05
-===========================
+Error-TryCatch
+==============
 
 Error::TryCatch implements exception handling (try-catch) blocks 
 functionality with an interface similiar to Error.pm (in fact, it's almost 
@@ -34,10 +34,7 @@ This module requires these other modules and libraries:
 
 COPYRIGHT AND LICENCE
 
-Copyright 2005 Nilson Santos F. Jr., All Rights Reserved.
+Copyright 2005-2007 Nilson Santos Figueiredo Júnior.
 
 This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself, either Perl version 5.8.6 or,
-at your option, any later version of Perl 5 you may have available.
-
-
+it under the same terms as Perl itself.

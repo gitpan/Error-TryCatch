@@ -7,6 +7,12 @@
 #
 # Some portions based on Error.pm from Graham Barr <gbarr@ti.com>
 
+#####################################################################
+# WARNING!                                                          #
+# This code is old, don't blame me if it's an unreadable mess.      #
+# Some day I might clean it up. Be glad that, apparently, it works. #
+#####################################################################
+
 package Error::TryCatch;
 use warnings;
 use strict;
@@ -16,7 +22,7 @@ use Filter::Simple;
 use Parse::RecDescent;
 use Carp;
 
-$VERSION = 0.05;
+$VERSION = '0.06';
 @EXPORT = qw(throw);
 
 $DEFAULT_EXCEPTION = 'Error::Unhandled' unless defined $DEFAULT_EXCEPTION;
@@ -26,19 +32,22 @@ my $grammar = q!
 program: <skip: qr/[ \t]*/> statement(s)
 statement: starting_bracket | except_handler(s) | non_relevant 
 starting_bracket: /^[\s]*[{}]/
-non_relevant: <perl_quotelike> | /[^\n]*\n?/
+non_relevant: <perl_quotelike>
+                 { bless { __VALUE__ => join "", @{ $item[1] } }, $item[0] }
+   | /[^\n]*\n?/
 exception_type: /[\w_]+(?:::[\w_]+)*/
 except_handler: "try" /[\s]*/ <perl_codeblock> /[\s]*/
-			  | "catch" /[\s]*/ exception_type "with" <perl_codeblock> /[\s]*/
+			  | "catch" /[\s]*/ exception_type with(?) <perl_codeblock> /[\s]*/
 			  | "otherwise" /[\s]*/ <perl_codeblock> /[\s]*/
 			  | "finally" /[\s]*/ <perl_codeblock> /[\s]*/
+
+with: "with"
 
 !;
 
 my $parser = new Parse::RecDescent($grammar);
 
 FILTER {
-	my($type, %args) = @_;
 	return unless defined $_;
 	my $tree = $parser->program($_);
 	$_ = _traverse($tree);
@@ -189,6 +198,9 @@ Error::TryCatch - OO-ish Exception Handling through source filtering
   catch Error::NewExceptionClass with {
 	  # code that handles Error::NewExceptionClass
   }
+  catch Error::YetAnotherExceptions {
+      # note that 'with' is optional (this differs from Error.pm)
+  }
   otherwise {
 	  # catch any other exception which might not have been caught
 	  my $exception_class = ref($@};
@@ -290,7 +302,7 @@ instead of just checking if it's a reference.
 
 =head1 BUGS
 
-If you have a try-catch construct inside a string it might get filtered also 
+If you have a try-catch construct inside a string it might get filtered too 
 (although the grammar tries to avoid id). If the try-catch construct is in a 
 heredoc it's almost certain it will get filtered.
 
@@ -298,26 +310,25 @@ There needs to be at least one line (it can be an empty one) after a exception
 handling block. So if it's the last thing in your program, you better add a
 newline at the end.
 
-Besides that, none known. In fact, if the code is well-formed (no synthax
-errors) I could almost guarantee that it works as expected.
+Besides those, there are no other known issues. In fact, if the code is 
+well-formed (no synthax errors) I could almost guarantee that it works as 
+expected.
 
-If you find any other bugs, please, report them to me.
+If you find any other bugs, please, report them directly to the author.
 
 =head1 SEE ALSO
 
-Error, Parse::RecDescent
+L<Error>, L<Parse::RecDescent>
 
 =head1 AUTHOR
 
-Nilson Santos F. Jr., C<< <nilsonsfj@cpan.org> >>
+Nilson Santos Figueiredo Júnior, C<< <nilsonsfj@cpan.org> >>
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2005 Nilson Santos F. Jr., All Rights Reserved.
+Copyright 2005-2007 Nilson Santos Figueiredo Júnior.
 
 This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself, either Perl version 5.8.6 or,
-at your option, any later version of Perl 5 you may have available.
-
+it under the same terms as Perl itself.
 
 =cut
