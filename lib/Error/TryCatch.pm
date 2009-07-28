@@ -1,6 +1,6 @@
 # Error::TryCatch
 #
-# Copyright (c) 2005 Nilson S. F. Jr. <nilsonsfj@cpan.org>.
+# Copyright (c) 2005-2009 Nilson Santos Figueiredo Jr. <nilsonsfj@cpan.org>.
 # All rights reserved.  This program is free software; 
 # you can redistribute it and/or modify it under the same 
 # terms as perl itself.
@@ -22,7 +22,7 @@ use Filter::Simple;
 use Parse::RecDescent;
 use Carp;
 
-$VERSION = '0.06';
+$VERSION = '0.07';
 @EXPORT = qw(throw);
 
 $DEFAULT_EXCEPTION = 'Error::Unhandled' unless defined $DEFAULT_EXCEPTION;
@@ -103,6 +103,9 @@ sub _traverse {
 						$innercode .= 'else' if $catch;
 						$innercode .= $clauses{otherwise};
 					}
+                    elsif ($catch) {
+                        $innercode .= 'else{Carp::croak($@)}';
+                    }
 					$innercode .= '}';
 				}
 				if (defined $clauses{finally}) {
@@ -110,7 +113,7 @@ sub _traverse {
 				}
 				$code .= $innercode;
 			}
-			else { die "synthax error: no try clause found\n"	}
+			else { die "syntax error: no try clause found\n"	}
 		}
 		else { die "unexpected parse error(2)\n" }
 	}
@@ -281,9 +284,9 @@ The trailing ';' at the of the block is absolutely necessary right now. This
 may change in the future but, unfortunately, right now, if you forget the 
 trailing ';' you'll get somewhat ugly errors. 
 Error.pm also needs them but, in its case, Perl always warns you about bad 
-synthax at compile time.
+syntax at compile time.
 
-Synthax errors related to '}' (maybe '{' too) become a little harder to track,
+Syntax errors related to '}' (maybe '{' too) become a little harder to track,
 since they end up confusing the parser's notion of "what a perl code block is".
 So be sure to balance the '{' and '}' your code. Maybe in a later version I'll 
 come up with a better solution for this problem.
@@ -311,7 +314,7 @@ handling block. So if it's the last thing in your program, you better add a
 newline at the end.
 
 Besides those, there are no other known issues. In fact, if the code is 
-well-formed (no synthax errors) I could almost guarantee that it works as 
+well-formed (no syntax errors) I could almost guarantee that it works as 
 expected.
 
 If you find any other bugs, please, report them directly to the author.
@@ -322,11 +325,11 @@ L<Error>, L<Parse::RecDescent>
 
 =head1 AUTHOR
 
-Nilson Santos Figueiredo Júnior, C<< <nilsonsfj@cpan.org> >>
+Nilson Santos Figueiredo Junior, C<< <nilsonsfj@cpan.org> >>
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2005-2007 Nilson Santos Figueiredo Júnior.
+Copyright 2005-2009 Nilson Santos Figueiredo Junior.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

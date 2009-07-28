@@ -1,5 +1,9 @@
 Revision history for Perl extension Error::TryCatch.
 
+0.07    Tue Jul 28 19:45:43 2009
+        * fix RT#48089 (uncaught exceptions were not being rethrown)
+        * fix some typos in the docs
+
 0.06    Sat Jan  6 03:08:06 2007
         * bugfix (patch by David M. Jones)
         * 'with' word is now optional when declaring the catch block
